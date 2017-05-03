@@ -20,7 +20,8 @@
 
 @interface FileView : NSView <NSTextFieldDelegate>
 {
-    BOOL _isFileNameEditAble;
+    int     b;
+    BOOL    _isFileNameEditAble;
 }
 
 @property (strong) id delegate;
