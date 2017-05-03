@@ -9,5 +9,7 @@
 #import "test.h"
 
 @implementation test
-
+{
+    int a;
+}
 @end
