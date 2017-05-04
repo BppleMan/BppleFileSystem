@@ -242,6 +242,7 @@
     //    [self interpretKeyEvents:[NSArray arrayWithObjects:theEvent, nil]];
     if ((theEvent.keyCode == 36) && self.isSelected)
     {
+        [self.delegate didChangedTheKeyView:self];
         [self.fileName setSelectable:YES];
         [self.fileName setEditable:YES];
         [self.window makeFirstResponder:self.fileName];
@@ -257,6 +258,12 @@
 {
     [self.fileName setSelectable:NO];
     [self.window makeFirstResponder:self];
+}
+
+- (BOOL)dragFile:(NSString *)filename fromRect:(NSRect)rect slideBack:(BOOL)aFlag event:(NSEvent *)event
+{
+    NSLog(@"%@", filename);
+    return YES;
 }
 
 @end

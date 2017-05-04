@@ -36,6 +36,7 @@
 
 @property (strong) NSMutableArray *fileViews;
 
+@property (strong) FileView *ketView;
 - (instancetype)initWithScale:(CGFloat)scale;
 
 - (void)reloadData;
@@ -51,5 +52,9 @@
 - (NSString *)creatNewFolder;
 
 - (NSString *)creatNewTextFile;
+
+- (void)whenCopy:(id)sender;
+
+- (void)whenPaste:(id)sender;
 
 @end

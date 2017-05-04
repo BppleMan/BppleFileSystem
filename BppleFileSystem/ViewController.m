@@ -185,7 +185,7 @@
     //    if ([_sidebarOutlineView selectedRow] != -1)
     //    {
     NSString *item = [_sidebarOutlineView itemAtRow:[_sidebarOutlineView selectedRow]];
-    if ([item isEqual:_fileSystemItem[0]])
+    if ([_fileSystemItem containsObject:item])
     {
         _currentPath = [[BPath alloc] initWithNSString:@"root"];
         [self pushToStack:_currentPath];
@@ -289,7 +289,7 @@
         [result setStringValue:value];
         return result;
     }
-    NSTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
+    MyTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
     [result.textField setStringValue:item];
     if ([_collectionItem containsObject:item])
     {
@@ -304,8 +304,17 @@
     else if ([_fileSystemItem containsObject:item])
     {
         result.imageView.image = [NSImage imageNamed:NSImageNameComputer];
+        result.imageButton.image = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
+        [result.imageButton setEnabled:YES];
+        result.item = item;
+        [result setDelegate:self];
     }
     return result;
+}
+
+- (void)unmountButtonDidClick:(id)sender
+{
+    [self unloadFileSystemControllerWithItem:sender];
 }
 
 /*
@@ -436,6 +445,13 @@
     self.fileSystemController = [[FileSystemController alloc] initWithFileSystemPath:[url path]];
 }
 
+- (void)unloadFileSystemControllerWithItem:(NSString *)item
+{
+    [_fileSystemItem removeObject:item];
+    [_sidebarOutlineView reloadData];
+    self.fileSystemController = nil;
+}
+
 /*
  *   =================================================================
  *   关于路径栈，通过压栈和出栈的方式控制当前路径，以此reload ContentView
@@ -509,6 +525,7 @@
 
 - (IBAction)creatNewFolder:(id)sender
 {
+    NSLog(@"%@", _fileContentView);
     NSString    *dirName = [_fileContentView creatNewFolder];
     BPath       *path = [BPath pathWithPath:_currentPath];
     [path appendenPathWithString:dirName];
@@ -522,6 +539,8 @@
     [path appendenPathWithString:fileName];
     [_fileSystemController creatNewTextFileWithPath:path];
 }
+
+- (IBAction)paste:(id)sender {}
 
 - (IBAction)loadFileSystemDocument:(id)sender
 {

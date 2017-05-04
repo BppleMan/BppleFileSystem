@@ -13,8 +13,9 @@
 #import "BppleFileDocument.h"
 #import "MyAccessoryViewController.h"
 #import "MyWindowController.h"
+#import "MyTableCellView.h"
 
-@interface ViewController : NSViewController <NSToolbarDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource, NSOpenSavePanelDelegate, FileContentViewDelegate, NSWindowDelegate>
+@interface ViewController : NSViewController <NSToolbarDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource, NSOpenSavePanelDelegate, FileContentViewDelegate, NSWindowDelegate, MyTableCellViewDelegate>
 {
     NSToolbar *_toolBar;
     
@@ -57,6 +58,8 @@
 - (IBAction)creatNewFolder:(id)sender;
 
 - (IBAction)creatTextFile:(id)sender;
+
+- (IBAction)paste:(id)sender;
 
 - (IBAction)loadFileSystemDocument:(id)sender;
 

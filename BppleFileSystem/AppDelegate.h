@@ -12,6 +12,4 @@
 
 @property (strong) IBOutlet NSWindow *window;
 
-@property (strong) IBOutlet NSWindow *textWindow;
-
 @end

@@ -717,25 +717,44 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <tableCellView identifier="MainCell" id="wle-jT-aIR">
+                                                                <tableCellView identifier="MainCell" id="wle-jT-aIR" customClass="MyTableCellView">
                                                                     <rect key="frame" x="1" y="17" width="213" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0u-IH-JKK">
-                                                                            <rect key="frame" x="3" y="0.0" width="17" height="17"/>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="3fk-4j-GNG"/>
-                                                                        </imageView>
                                                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sb-yD-A8y">
-                                                                            <rect key="frame" x="25" y="0.0" width="120" height="17"/>
+                                                                            <rect key="frame" x="25" y="0.0" width="97" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="mlf-yA-Fis">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
+                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0u-IH-JKK">
+                                                                            <rect key="frame" x="3" y="0.0" width="17" height="17"/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="3fk-4j-GNG"/>
+                                                                        </imageView>
+                                                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="M1t-79-NmO">
+                                                                            <rect key="frame" x="196" y="0.0" width="17" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="17" id="JAJ-to-984"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="ooI-9a-MLE"/>
+                                                                            </constraints>
+                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="JVC-rc-ydU">
+                                                                                <behavior key="behavior" lightByContents="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="didClick:" target="wle-jT-aIR" id="ULL-NP-QeK"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="M1t-79-NmO" firstAttribute="centerY" secondItem="wle-jT-aIR" secondAttribute="centerY" id="6So-dV-JK0"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="M1t-79-NmO" secondAttribute="trailing" id="kAv-ih-RMf"/>
+                                                                    </constraints>
                                                                     <connections>
-                                                                        <outlet property="imageView" destination="S0u-IH-JKK" id="oLP-Pb-YiL"/>
+                                                                        <outlet property="imageButton" destination="M1t-79-NmO" id="air-ly-vVh"/>
+                                                                        <outlet property="imageView" destination="S0u-IH-JKK" id="LF7-jj-4qV"/>
                                                                         <outlet property="textField" destination="2sb-yD-A8y" id="uM8-Pe-P7J"/>
                                                                     </connections>
                                                                 </tableCellView>
@@ -820,16 +839,6 @@
                 </constraints>
             </view>
         </window>
-        <viewController id="94e-TP-TMG" customClass="ViewController">
-            <connections>
-                <outlet property="_fileContentViewMenu" destination="meI-I9-Yoo" id="baw-Xh-v2B"/>
-                <outlet property="_fileViewSizeSlider" destination="Gb2-PS-Nrd" id="dGu-MZ-Buc"/>
-                <outlet property="_rightView" destination="5Ao-Iz-wt8" id="4BC-eF-VwI"/>
-                <outlet property="_sidebarOutlineView" destination="uLX-oH-cSc" id="snD-ph-6sL"/>
-                <outlet property="view" destination="EiT-Mj-1SZ" id="B5C-9s-d1c"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="7QV-SF-ptq"/>
-            </connections>
-        </viewController>
         <menu id="meI-I9-Yoo">
             <items>
                 <menuItem title="新建文件夹" id="VoL-eY-axe">
@@ -844,11 +853,24 @@
                         <action selector="creatTextFile:" target="94e-TP-TMG" id="cxG-cX-WIE"/>
                     </connections>
                 </menuItem>
-                <menuItem title="整理" id="2DO-6k-4dJ">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="整理" keyEquivalent="b" id="2DO-6k-4dJ"/>
+                <menuItem title="粘贴" keyEquivalent="v" id="JqM-Jm-VBU">
+                    <connections>
+                        <action selector="paste:" target="94e-TP-TMG" id="Qqq-it-6mY"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>
+        <viewController id="94e-TP-TMG" customClass="ViewController">
+            <connections>
+                <outlet property="_fileContentViewMenu" destination="meI-I9-Yoo" id="baw-Xh-v2B"/>
+                <outlet property="_fileViewSizeSlider" destination="Gb2-PS-Nrd" id="dGu-MZ-Buc"/>
+                <outlet property="_rightView" destination="5Ao-Iz-wt8" id="4BC-eF-VwI"/>
+                <outlet property="_sidebarOutlineView" destination="uLX-oH-cSc" id="snD-ph-6sL"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="B5C-9s-d1c"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="7QV-SF-ptq"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

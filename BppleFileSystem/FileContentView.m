@@ -21,15 +21,39 @@
         _scale = scale;
         self.fileItems = [[NSMutableDictionary alloc] init];
         self.fileViews = [[NSMutableArray alloc] init];
-        //        self.fileTypes = [[NSMutableArray alloc] init];
-        //        NSRect      frame = NSMakeRect(0, 0, _fileViewWidth * scale, _fileViewHeight * scale);
-        //        FileView    *fileView = [[FileView alloc] initWithFrame:frame WithFileName:@"root" WithFileTypeOperation:BPDirectory];
-        //        [self addSubview:fileView];
-        //        [fileView setDelegate:self];
-        
-        //        [self.fileViews addObject:fileView];
+        [self registerForDraggedTypes:[NSArray arrayWithObjects: NSFilenamesPboardType, nil]];
+        //        NSString    *pboardType = NSCreateFileContentsPboardType(@"mov");
+        //        NSArray     *dragTypes = [NSArray arrayWithObject:pboardType];
+        //        [self registerForDraggedTypes:dragTypes];
     }
     return self;
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
+{
+    NSLog(@"%s", __func__);
+    [self addCursorRect:[self bounds] cursor:[NSCursor dragCopyCursor]];
+    return NSDragOperationCopy;
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSLog(@"%s", __func__);
+    [self discardCursorRects];
+    return YES;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
+{
+    NSPasteboard *pboard = [sender draggingPasteboard];
+    NSLog(@"%@", [pboard types]);
+    if ([[pboard types] containsObject:NSFileContentsPboardType])
+    {
+        NSFileWrapper *fileContents = [pboard readFileWrapper];
+        NSLog(@"%@", [fileContents filename]);
+        // Perform operation using the file’s contents
+    }
+    return YES;
 }
 
 /*
@@ -138,6 +162,12 @@
     [self.window makeFirstResponder:fileView];
 }
 
+// FileView的焦点View代理方法
+- (void)didChangedTheKeyView:(FileView *)sender
+{
+    self.ketView = sender;
+}
+
 - (void)reloadViewWithFileNode:(FileNode *)fileNode
 {
     [self reloadViewWithFileChilds:fileNode.childs];
@@ -244,6 +274,20 @@
     [self.fileItems setObject:[NSNumber numberWithUnsignedInteger:BppleTextFileType] forKey:result];
     [self.fileViews addObject:fileView];
     return result;
+}
+
+// - (BOOL)dragFile:(NSString *)filename fromRect:(NSRect)rect slideBack:(BOOL)aFlag event:(NSEvent *)event
+// {
+//    NSLog(@"%@", filename);
+//    return YES;
+// }
+
+// - (void)mouseDragged:(NSEvent *)theEvent
+// {}
+
+- (void)whenPaste:(id)sender
+{
+    NSLog(@"%@", self);
 }
 
 @end

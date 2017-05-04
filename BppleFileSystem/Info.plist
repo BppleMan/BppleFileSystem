@@ -18,7 +18,15 @@
 				<string>com.bppleman.bpplefilesystem.bpfs</string>
 			</array>
 			<key>NSDocumentClass</key>
-			<string>BppleFileDocument</string>
+			<string></string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>plain.text</string>
+			</array>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>

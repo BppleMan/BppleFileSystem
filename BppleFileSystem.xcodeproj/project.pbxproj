@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		69DCFECF1EB999660036C700 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DCFECE1EB999660036C700 /* test.m */; };
+		69C253151EBA46DB0076C82D /* MyTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C253141EBA46DB0076C82D /* MyTableCellView.m */; };
 		69DD5D0D1EB783CB00E96E7F /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DD5D0B1EB783CB00E96E7F /* MyWindowController.m */; };
 		69DD5D0E1EB783CB00E96E7F /* MyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DD5D0C1EB783CB00E96E7F /* MyWindowController.xib */; };
 		69E2BAA61EB350E900AFB311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAA51EB350E900AFB311 /* AppDelegate.m */; };
@@ -33,8 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		69DCFECD1EB999660036C700 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
-		69DCFECE1EB999660036C700 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		69C253131EBA46DB0076C82D /* MyTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableCellView.h; sourceTree = "<group>"; };
+		69C253141EBA46DB0076C82D /* MyTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableCellView.m; sourceTree = "<group>"; };
 		69DD5D0A1EB783CB00E96E7F /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
 		69DD5D0B1EB783CB00E96E7F /* MyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyWindowController.m; sourceTree = "<group>"; };
 		69DD5D0C1EB783CB00E96E7F /* MyWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyWindowController.xib; sourceTree = "<group>"; };
@@ -204,6 +204,8 @@
 				69E2BAE51EB3DABC00AFB311 /* MyAccessoryViewController.h */,
 				69E2BAE61EB3DABC00AFB311 /* MyAccessoryViewController.m */,
 				69E2BAD81EB3BF7D00AFB311 /* MyAccessoryViewController.xib */,
+				69C253131EBA46DB0076C82D /* MyTableCellView.h */,
+				69C253141EBA46DB0076C82D /* MyTableCellView.m */,
 				69E2BAE21EB3CEA600AFB311 /* BppleFileDocument.h */,
 				69E2BAE31EB3CEA600AFB311 /* BppleFileDocument.m */,
 				69E2BAB51EB3510600AFB311 /* ViewController.h */,
@@ -212,8 +214,6 @@
 				69E2BABB1EB376C500AFB311 /* FileContentView.m */,
 				69E2BAD51EB37A5100AFB311 /* FileView.h */,
 				69E2BAD61EB37A5100AFB311 /* FileView.m */,
-				69DCFECD1EB999660036C700 /* test.h */,
-				69DCFECE1EB999660036C700 /* test.m */,
 			);
 			name = ViewSource;
 			sourceTree = "<group>";
@@ -299,10 +299,10 @@
 				69E2BAE71EB3DABC00AFB311 /* MyAccessoryViewController.m in Sources */,
 				69E2BAB81EB3510600AFB311 /* ViewController.m in Sources */,
 				69E2BAD11EB37A0100AFB311 /* FileNode.m in Sources */,
-				69DCFECF1EB999660036C700 /* test.m in Sources */,
 				69E2BAA91EB350E900AFB311 /* main.m in Sources */,
 				69E2BAD31EB37A0100AFB311 /* BPath.m in Sources */,
 				69DD5D0D1EB783CB00E96E7F /* MyWindowController.m in Sources */,
+				69C253151EBA46DB0076C82D /* MyTableCellView.m in Sources */,
 				69E2BACD1EB37A0100AFB311 /* FileSystemController.m in Sources */,
 				69E2BABC1EB376C500AFB311 /* FileContentView.m in Sources */,
 				69E2BAD01EB37A0100AFB311 /* CataTree.m in Sources */,

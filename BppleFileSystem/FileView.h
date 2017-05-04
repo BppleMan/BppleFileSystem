@@ -16,6 +16,9 @@
 - (void)didDoubleClicked:(id)fileView;
 
 - (void)didClicked:(id)fileView;
+
+- (void)didChangedTheKeyView:(id)sender;
+
 @end
 
 @interface FileView : NSView <NSTextFieldDelegate>
