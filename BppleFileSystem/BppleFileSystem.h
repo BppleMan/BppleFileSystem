@@ -27,21 +27,23 @@ static const NSInteger DefaultFileSize = 1073741824;
 
 @property (nonatomic, strong) CataTree *cataTree;
 
-// @property (nonatomic, strong) NSMutableData *data;
-
 - (instancetype)initWithFileSize:(NSUInteger)fileSize WithClusterSize:(NSUInteger)clusterSize;
 
 - (FileNode *)cd:(BPath *)path;
 
 - (FileNode *)ls:(BPath *)path;
 
-- (void)mkdir:(BPath *)path;
+- (BOOL)mkdir:(BPath *)path;
 
 - (void)rm:(BPath *)path;
 
-- (void)vim:(BPath *)path;
+- (BOOL)vim:(BPath *)path;
 
 - (void)write:(BPath *)path with:(NSData *)data;
+
+- (BOOL)rename:(BPath *)path with:(NSString *)newName;
+
+- (void)cp:(BPath *)oldPath to:(BPath *)newPath;
 
 - (NSData *)read:(BPath *)path;
 

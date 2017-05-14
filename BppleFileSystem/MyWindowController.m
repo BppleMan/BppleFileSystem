@@ -14,11 +14,18 @@
 
 @implementation MyWindowController
 
-- (void)windowDidLoad {
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    [self.textView setDelegate:self];
+}
+
+- (void)windowDidLoad
+{
     [super windowDidLoad];
     [self.textView setTextColor:[NSColor whiteColor]];
     [self.textView setFont:[NSFont fontWithName:@"Menlo" size:16]];
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [self.textView setAllowsUndo:YES];
 }
 
 @end

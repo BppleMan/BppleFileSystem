@@ -16,11 +16,9 @@
 
 - (void)creatRootNodeWith:(iNode *)inode;
 
-- (void)creatFileNodeWith:(iNode *)inode ToParent:(FileNode *)parentNode;
+- (void)addFileNode:(FileNode *)fileNode ToPath:(BPath *)path;
 
-- (void)addFileNodeWith:(iNode *)inode ToPath:(BPath *)path;
-
-- (FileNode *)findFileNodeWithiNode:(iNode *)inode;
+- (void)addFileNode:(FileNode *)fileNode ToParent:(FileNode *)parent;
 
 - (FileNode *)findFileNodeWithPath:(BPath *)path inRoot:(FileNode *)root;
 

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MyWindowController : NSWindowController
+@interface MyWindowController : NSWindowController <NSTextViewDelegate>
 
 @property (strong) IBOutlet NSTextView *textView;
 

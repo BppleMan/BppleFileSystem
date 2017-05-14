@@ -31,30 +31,16 @@
     [self.rootNode setParent:nil];
 }
 
-- (void)creatFileNodeWith:(iNode *)inode ToParent:(FileNode *)parentNode;
+- (void)addFileNode:(FileNode *)fileNode ToPath:(BPath *)path;
 {
-    FileNode *fileNode = [[FileNode alloc] initWithiNode:inode];
-    [fileNode setParent:parentNode];
-    [parentNode addChildsObject:fileNode];
+    FileNode *parent = [self findFileNodeWithPath:path inRoot:self.rootNode];
+    [self addFileNode:fileNode ToParent:parent];
 }
 
-- (void)addFileNodeWith:(iNode *)inode ToPath:(BPath *)path
+- (void)addFileNode:(FileNode *)fileNode ToParent:(FileNode *)parent
 {
-    FileNode    *parent = [self findFileNodeWithPath:path inRoot:self.rootNode];
-    FileNode    *fileNode = [[FileNode alloc] initWithiNode:inode];
     [parent addChildsObject:fileNode];
     [fileNode setParent:parent];
-}
-
-/**
- *  层序遍历树
- *  通过inode以搜索某节点
- *
- *  @return
- */
-- (FileNode *)findFileNodeWithiNode:(iNode *)inode
-{
-    return nil;
 }
 
 - (NSMutableArray *)LSFileNodeWithFileName:(NSString *)fileName
@@ -81,13 +67,12 @@
 
 - (FileNode *)findFileNodeWithPath:(BPath *)path inRoot:(FileNode *)root
 {
-    FileNode    *result = root;
-    FileNode    *finded = nil;
+    FileNode    *result = nil;
+    FileNode    *finded = self.rootNode;
     for (NSString *name in [path pathArr])
     {
-        finded = [self findFileNodeWithName:name inRoot:result];
-        if (finded != nil)
-            result = finded;
+        finded = [self findFileNodeWithName:name inRoot:finded];
+        result = finded;
     }
     return result;
 }

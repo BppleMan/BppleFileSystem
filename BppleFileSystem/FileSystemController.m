@@ -55,7 +55,7 @@
     [NSKeyedArchiver archiveRootObject:self.bppleFileSystem toFile:_path];
 }
 
-- (NSMutableArray *)showFilesChildsWith:(BPath *)path
+- (NSMutableArray *)showFileChildsWith:(BPath *)path
 {
     if (!path)
         return nil;
@@ -63,10 +63,17 @@
     return fileNode.childs;
 }
 
-- (void)creatNewFolderWithPath:(BPath *)path
+- (FileAction)creatNewFolderWithPath:(BPath *)path
 {
-    [self.bppleFileSystem mkdir:path];
-    [self saveFileSystem];
+    FileAction result;
+    if ([self.bppleFileSystem mkdir:path])
+    {
+        result = SUCCESS;
+        [self saveFileSystem];
+    }
+    else
+        result = SAMENAME;
+    return result;
 }
 
 - (void)removeFileWithPath:(BPath *)path;
@@ -75,10 +82,17 @@
     [self saveFileSystem];
 }
 
-- (void)creatNewTextFileWithPath:(BPath *)path
+- (FileAction)creatNewTextFileWithPath:(BPath *)path
 {
-    [self.bppleFileSystem vim:path];
-    [self saveFileSystem];
+    FileAction result;
+    if ([self.bppleFileSystem vim:path])
+    {
+        result = SUCCESS;
+        [self saveFileSystem];
+    }
+    else
+        result = SAMENAME;
+    return result;
 }
 
 - (void)writeTheTextFile:(BPath *)path With:(NSString *)stringValue
@@ -93,4 +107,90 @@
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
+- (FileAction)renameFileWith:(BPath *)path WithNewName:(NSString *)newName
+{
+    FileAction result;
+    if ([self.bppleFileSystem rename:path with:newName])
+    {
+        result = SUCCESS;
+        [self saveFileSystem];
+    }
+    else
+        result = SAMENAME;
+    return result;
+}
+
+- (FileAction)transferFileWithStringPath:(NSString *)stringPath IntoFileSystemWithBPath:(BPath *)filePath
+{
+    FileAction              result = FAILED;
+    NSArray <NSString *>    *pathArr = [stringPath componentsSeparatedByString:@"/"];
+    if ([[pathArr.lastObject pathExtension] isEqual:@"txt"])
+    {
+        BPath *path = [BPath pathWithPath:filePath];
+        [path appendenPathWithString:[pathArr lastObject]];
+        NSFileHandle    *fileHandle = [NSFileHandle fileHandleForReadingAtPath:stringPath];
+        NSData          *fileData = [fileHandle readDataToEndOfFile];
+        if ([_bppleFileSystem vim:path])
+        {
+            result = SUCCESS;
+            [_bppleFileSystem write:path with:fileData];
+            [self saveFileSystem];
+        }
+        else
+            result = SAMENAME;
+        [fileHandle closeFile];
+    }
+    return result;
+}
+
+- (FileAction)cloneFileWithOldPath:(BPath *)oldPath IntoNewPath:(BPath *)newPath
+{
+    [self.bppleFileSystem cp:oldPath to:newPath];
+    [self saveFileSystem];
+    return SUCCESS;
+}
+
+- (NSString *)creatFileInRealSystemWithPath:(BPath *)filePath
+{
+    FileNode        *fileNode = [self.bppleFileSystem ls:filePath];
+    NSFileManager   *fileManager = [NSFileManager defaultManager];
+    NSString        *cache = [fileManager applicationCacheDirectory];
+    NSString        *path = nil;
+    NSData          *data = nil;
+    switch (fileNode.inode.fileType)
+    {
+        case BppleTextFileType:
+        {
+            path = [NSString stringWithFormat:@"%@/%@", cache, fileNode.inode.fileName];
+            data = [self.bppleFileSystem read:filePath];
+            [fileManager createFileAtPath:path contents:data attributes:nil];
+            break;
+        }
+        case BppleDirectoryType:
+        {
+            break;
+        }
+    }
+    return path;
+}
+
+////递归建立目录树
+// - (void)creatFolder:(FileNode *)fileNode To:(NSString *)path
+// {
+//    NSFileManager   *fileManager = [NSFileManager defaultManager];
+//    switch (fileNode.inode.fileType)
+//    {
+//        case BppleTextFileType:
+//        {
+//            NSString    *path = [NSString stringWithFormat:@"%@/%@", path, fileNode.inode.fileName];
+//            NSData      *data = [self.bppleFileSystem read:filePath];
+//            [fileManager createFileAtPath:path contents:data attributes:nil];
+//            break;
+//        }
+//        case BppleDirectoryType:
+//        {
+//            break;
+//        }
+//    }
+// }
 @end

@@ -150,12 +150,12 @@
                             </menuItem>
                             <menuItem title="Copy" keyEquivalent="c" id="x3v-GG-iWU">
                                 <connections>
-                                    <action selector="copy:" target="-1" id="G1f-GL-Joy"/>
+                                    <action selector="copy:" target="94e-TP-TMG" id="LW6-Qc-j3Y"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Paste" keyEquivalent="v" id="gVA-U4-sdL">
                                 <connections>
-                                    <action selector="paste:" target="-1" id="UvS-8e-Qdg"/>
+                                    <action selector="paste:" target="94e-TP-TMG" id="XGo-cL-cQj"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Paste and Match Style" keyEquivalent="V" id="WeT-3V-zwk">
@@ -717,26 +717,67 @@
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <tableCellView identifier="MainCell" id="wle-jT-aIR">
+                                                                <tableCellView identifier="FolderCell" id="wle-jT-aIR">
                                                                     <rect key="frame" x="1" y="17" width="213" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0u-IH-JKK">
-                                                                            <rect key="frame" x="3" y="0.0" width="17" height="17"/>
-                                                                            <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="3fk-4j-GNG"/>
-                                                                        </imageView>
                                                                         <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2sb-yD-A8y">
-                                                                            <rect key="frame" x="25" y="0.0" width="120" height="17"/>
+                                                                            <rect key="frame" x="25" y="0.0" width="97" height="17"/>
                                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="mlf-yA-Fis">
                                                                                 <font key="font" metaFont="system"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
+                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0u-IH-JKK">
+                                                                            <rect key="frame" x="3" y="0.0" width="17" height="17"/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="3fk-4j-GNG"/>
+                                                                        </imageView>
                                                                     </subviews>
                                                                     <connections>
-                                                                        <outlet property="imageView" destination="S0u-IH-JKK" id="oLP-Pb-YiL"/>
+                                                                        <outlet property="imageView" destination="S0u-IH-JKK" id="LF7-jj-4qV"/>
                                                                         <outlet property="textField" destination="2sb-yD-A8y" id="uM8-Pe-P7J"/>
+                                                                    </connections>
+                                                                </tableCellView>
+                                                                <tableCellView identifier="FileSystemCell" id="TcE-Rt-U31" customClass="MyTableCellView">
+                                                                    <rect key="frame" x="1" y="36" width="213" height="17"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9VS-pT-w3z">
+                                                                            <rect key="frame" x="25" y="0.0" width="97" height="17"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="TXu-yr-ZTP">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zGw-hg-LJz">
+                                                                            <rect key="frame" x="3" y="0.0" width="17" height="17"/>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="G3y-b7-9fB"/>
+                                                                        </imageView>
+                                                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="unk-2Q-Lq0">
+                                                                            <rect key="frame" x="196" y="0.0" width="17" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="17" id="dnl-SD-IPF"/>
+                                                                                <constraint firstAttribute="width" constant="17" id="eir-7L-ADa"/>
+                                                                            </constraints>
+                                                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" enabled="NO" imageScaling="proportionallyUpOrDown" inset="2" id="1kN-59-ncv">
+                                                                                <behavior key="behavior" lightByContents="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="didClick:" target="TcE-Rt-U31" id="gSG-SF-ekI"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="unk-2Q-Lq0" secondAttribute="trailing" id="Jv6-Kk-qDE"/>
+                                                                        <constraint firstItem="unk-2Q-Lq0" firstAttribute="centerY" secondItem="TcE-Rt-U31" secondAttribute="centerY" id="kBZ-N0-T8W"/>
+                                                                    </constraints>
+                                                                    <connections>
+                                                                        <outlet property="imageButton" destination="unk-2Q-Lq0" id="E21-ss-aLi"/>
+                                                                        <outlet property="imageView" destination="zGw-hg-LJz" id="Xzu-Cx-zBw"/>
+                                                                        <outlet property="textField" destination="9VS-pT-w3z" id="1h0-XS-ac0"/>
                                                                     </connections>
                                                                 </tableCellView>
                                                             </prototypeCellViews>
@@ -772,6 +813,9 @@
                             <real value="250"/>
                             <real value="250"/>
                         </holdingPriorities>
+                        <connections>
+                            <outlet property="delegate" destination="94e-TP-TMG" id="OOU-7s-voT"/>
+                        </connections>
                     </splitView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="p8F-Qb-9es">
                         <rect key="frame" x="0.0" y="0.0" width="1280" height="25"/>
@@ -820,16 +864,6 @@
                 </constraints>
             </view>
         </window>
-        <viewController id="94e-TP-TMG" customClass="ViewController">
-            <connections>
-                <outlet property="_fileContentViewMenu" destination="meI-I9-Yoo" id="baw-Xh-v2B"/>
-                <outlet property="_fileViewSizeSlider" destination="Gb2-PS-Nrd" id="dGu-MZ-Buc"/>
-                <outlet property="_rightView" destination="5Ao-Iz-wt8" id="4BC-eF-VwI"/>
-                <outlet property="_sidebarOutlineView" destination="uLX-oH-cSc" id="snD-ph-6sL"/>
-                <outlet property="view" destination="EiT-Mj-1SZ" id="B5C-9s-d1c"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="7QV-SF-ptq"/>
-            </connections>
-        </viewController>
         <menu id="meI-I9-Yoo">
             <items>
                 <menuItem title="新建文件夹" id="VoL-eY-axe">
@@ -844,11 +878,24 @@
                         <action selector="creatTextFile:" target="94e-TP-TMG" id="cxG-cX-WIE"/>
                     </connections>
                 </menuItem>
-                <menuItem title="整理" id="2DO-6k-4dJ">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="粘贴" keyEquivalent="v" id="8yh-zQ-hAR">
+                    <connections>
+                        <action selector="paste:" target="94e-TP-TMG" id="miA-c7-gFc"/>
+                    </connections>
                 </menuItem>
             </items>
         </menu>
+        <viewController id="94e-TP-TMG" customClass="ViewController">
+            <connections>
+                <outlet property="_fileContentViewMenu" destination="meI-I9-Yoo" id="baw-Xh-v2B"/>
+                <outlet property="_fileViewSizeSlider" destination="Gb2-PS-Nrd" id="dGu-MZ-Buc"/>
+                <outlet property="_leftView" destination="aJa-rG-1XK" id="uis-Mg-Lwa"/>
+                <outlet property="_rightView" destination="5Ao-Iz-wt8" id="4BC-eF-VwI"/>
+                <outlet property="_sidebarOutlineView" destination="uLX-oH-cSc" id="snD-ph-6sL"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="B5C-9s-d1c"/>
+                <outlet property="window" destination="QvC-M9-y7g" id="7QV-SF-ptq"/>
+            </connections>
+        </viewController>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
