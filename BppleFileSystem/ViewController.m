@@ -507,6 +507,15 @@
 {
     _copyPath = [BPath pathWithPath:_currentPath];
     [_copyPath appendenPathWithString:fileName];
+    NSString *filePath = [_fileSystemController creatFileInRealSystemWithPath:_copyPath];
+    if (filePath)
+    {
+        NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+        [pboard clearContents];
+        NSArray *prom = [NSArray arrayWithObjects:filePath, nil];
+        [pboard setPropertyList:prom forType:NSFilenamesPboardType];
+        [pboard setString:fileName forType:NSStringPboardType];
+    }
 }
 
 - (void)pasteFileWithFilePathes:(NSMutableArray *)filePaths
@@ -524,6 +533,12 @@
         {
             NSAlert *alert = [[NSAlert alloc] init];
             [alert setInformativeText:@"同名文件"];
+            [alert beginSheetModalForWindow:self.window completionHandler:nil];
+        }
+        else
+        {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setInformativeText:@"不支持该文件类型"];
             [alert beginSheetModalForWindow:self.window completionHandler:nil];
         }
     }
@@ -635,6 +650,7 @@
     [pboard clearContents];
     FileView *fileView = [[_fileContentView selectedFileViews] firstObject];
     [self copyFileWithFileName:[fileView.fileName stringValue]];
+    
     //    [pboard setString:@"abc.txt" forType:NSStringPboardType];
     //    [pboard setData:[@"dasfdsfkl" dataUsingEncoding:NSUTF8StringEncoding] forType:NSURLPboardType];
     //    NSFileWrapper   *fileWrapper = [[NSFileWrapper alloc]init];

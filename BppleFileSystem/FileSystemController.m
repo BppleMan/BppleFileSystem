@@ -150,4 +150,47 @@
     return SUCCESS;
 }
 
+- (NSString *)creatFileInRealSystemWithPath:(BPath *)filePath
+{
+    FileNode        *fileNode = [self.bppleFileSystem ls:filePath];
+    NSFileManager   *fileManager = [NSFileManager defaultManager];
+    NSString        *cache = [fileManager applicationCacheDirectory];
+    NSString        *path = nil;
+    NSData          *data = nil;
+    switch (fileNode.inode.fileType)
+    {
+        case BppleTextFileType:
+        {
+            path = [NSString stringWithFormat:@"%@/%@", cache, fileNode.inode.fileName];
+            data = [self.bppleFileSystem read:filePath];
+            [fileManager createFileAtPath:path contents:data attributes:nil];
+            break;
+        }
+        case BppleDirectoryType:
+        {
+            break;
+        }
+    }
+    return path;
+}
+
+////递归建立目录树
+// - (void)creatFolder:(FileNode *)fileNode To:(NSString *)path
+// {
+//    NSFileManager   *fileManager = [NSFileManager defaultManager];
+//    switch (fileNode.inode.fileType)
+//    {
+//        case BppleTextFileType:
+//        {
+//            NSString    *path = [NSString stringWithFormat:@"%@/%@", path, fileNode.inode.fileName];
+//            NSData      *data = [self.bppleFileSystem read:filePath];
+//            [fileManager createFileAtPath:path contents:data attributes:nil];
+//            break;
+//        }
+//        case BppleDirectoryType:
+//        {
+//            break;
+//        }
+//    }
+// }
 @end

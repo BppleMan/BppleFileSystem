@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "BppleFileSystem.h"
+#import "NSFileManager+DirectoryLocations.h"
 
 typedef enum : NSUInteger
 {
@@ -48,4 +49,7 @@ typedef enum : NSUInteger
 - (FileAction)cloneFileWithOldPath:(BPath *)oldPath IntoNewPath:(BPath *)newPath;
 
 - (NSString *)readTheTextFile:(BPath *)path;
+
+- (NSString *)creatFileInRealSystemWithPath:(BPath *)filePath;
+
 @end
