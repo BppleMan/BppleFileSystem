@@ -64,7 +64,7 @@
 
 - (NSString *)description
 {
-    NSString *result = [NSString stringWithFormat:@"[self:%@ childs:%@]", [_inode fileName], self.childs];
+    NSString *result = [NSString stringWithFormat:@"[%@]", [_inode fileName]];
     return result;
 }
 

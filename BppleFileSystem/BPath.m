@@ -10,13 +10,24 @@
 
 @implementation BPath
 
-- (instancetype)initWithNSString:(NSString *)string
+- (instancetype)initWithNSString:(nonnull NSString *)string
 {
     self = [super init];
     if (self)
     {
         self.pathArr = [NSMutableArray arrayWithArray:[string componentsSeparatedByString:@"/"]];
         self.pathStr = [NSMutableString stringWithString:string];
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        self.pathArr = [[NSMutableArray alloc] init];
+        self.pathStr = [[NSMutableString alloc] init];
     }
     return self;
 }
@@ -41,6 +52,17 @@
 - (NSArray *)getPathWithoutLastPath
 {
     return [NSArray arrayWithArray:[self.pathArr subarrayWithRange:NSMakeRange(0, self.pathArr.count - 1)]];
+}
+
+- (BPath *)getParentPath
+{
+    BPath   *parent = [[BPath alloc] init];
+    NSArray *arr = [self getPathWithoutLastPath];
+    for (NSString *str in arr)
+    {
+        [parent appendenPathWithString:str];
+    }
+    return parent;
 }
 
 - (id)copyWithZone:(NSZone *)zone

@@ -191,12 +191,15 @@
 
 - (void)initMenu
 {
-    self.bpmenu = [[NSMenu alloc] init];
-    NSMenuItem *deleteItem = [[NSMenuItem alloc] init];
-    [deleteItem setTitle:@"删除"];
-    [deleteItem setAction:@selector(deleteFile:)];
-    [self.bpmenu insertItem:deleteItem atIndex:0];
-    [self setMenu:self.bpmenu];
+    [[NSBundle mainBundle] loadNibNamed:@"FileViewMenu" owner:self topLevelObjects:nil];
+    //    self.bpmenu = [[NSMenu alloc] init];
+    //    NSMenuItem *deleteItem = [[NSMenuItem alloc] init];
+    //    [deleteItem setTitle:@"删除"];
+    //    [deleteItem setAction:@selector(deleteFile:)];
+    //    [self.bpmenu insertItem:deleteItem atIndex:0];
+    //
+    //    NSMenuItem *copyItem = [[NSMenuItem alloc] init];
+    //    [self setMenu:self.bpmenu];
 }
 
 /*
@@ -205,9 +208,14 @@
  *   =================================================================
  */
 
-- (void)deleteFile:(id)sender
+- (IBAction)deleteFile:(id)sender
 {
-    [self.delegate willRemoveTheFileView:self];
+    [self.menuDelegate willDelete:self];
+}
+
+- (IBAction)copyFile:(id)sender
+{
+    [self.menuDelegate willCopy:self];
 }
 
 - (void)changeFileImageLayer
@@ -226,10 +234,6 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    //    [self setIsSelected:YES];
-    //    [self changeFileImageLayer];
-    //    [self setNeedsDisplay:YES];
-    //    [self.window makeFirstResponder:self];
     [self.delegate didClicked:self];
     if ([theEvent clickCount] == 2)
     {
@@ -242,10 +246,11 @@
     //    [self interpretKeyEvents:[NSArray arrayWithObjects:theEvent, nil]];
     if ((theEvent.keyCode == 36) && self.isSelected)
     {
-        [self.delegate didChangedTheKeyView:self];
+        [self.delegate didChangedTheInputFocusView:self];
         [self.fileName setSelectable:YES];
         [self.fileName setEditable:YES];
         [self.window makeFirstResponder:self.fileName];
+        _oldName = [[NSString alloc] initWithString:[self.fileName stringValue]];
     }
 }
 
@@ -254,10 +259,23 @@
     return self.isSelected;
 }
 
+/**
+ *  @author BppleMan
+ *
+ *  当结束输入后:
+ *  包括按下回车结束输入
+ *  或者鼠标点击空白处结束输入
+ *
+ *  @param obj
+ */
 - (void)controlTextDidEndEditing:(NSNotification *)obj
 {
     [self.fileName setSelectable:NO];
     [self.window makeFirstResponder:self];
+    if (![self.fileName.stringValue isEqual:_oldName])
+    {
+        [self.delegate didrename:self.fileName.stringValue withOldName:_oldName];
+    }
 }
 
 - (BOOL)dragFile:(NSString *)filename fromRect:(NSRect)rect slideBack:(BOOL)aFlag event:(NSEvent *)event

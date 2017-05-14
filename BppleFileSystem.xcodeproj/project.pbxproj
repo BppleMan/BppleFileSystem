@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6917ECBF1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.m in Sources */ = {isa = PBXBuildFile; fileRef = 6917ECBE1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.m */; };
+		69343C9D1EC07C3B00C78818 /* NSMutableArray+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 69343C9C1EC07C3B00C78818 /* NSMutableArray+Log.m */; };
+		69651EB01EC8908D00FC7193 /* FileViewMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69651EAF1EC8908D00FC7193 /* FileViewMenu.xib */; };
 		69C253151EBA46DB0076C82D /* MyTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C253141EBA46DB0076C82D /* MyTableCellView.m */; };
 		69DD5D0D1EB783CB00E96E7F /* MyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DD5D0B1EB783CB00E96E7F /* MyWindowController.m */; };
 		69DD5D0E1EB783CB00E96E7F /* MyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69DD5D0C1EB783CB00E96E7F /* MyWindowController.xib */; };
@@ -26,13 +29,17 @@
 		69E2BAD41EB37A0100AFB311 /* DataConversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BACC1EB37A0100AFB311 /* DataConversion.m */; };
 		69E2BAD71EB37A5100AFB311 /* FileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAD61EB37A5100AFB311 /* FileView.m */; };
 		69E2BAD91EB3BF7D00AFB311 /* MyAccessoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69E2BAD81EB3BF7D00AFB311 /* MyAccessoryViewController.xib */; };
-		69E2BAE41EB3CEA600AFB311 /* BppleFileDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAE31EB3CEA600AFB311 /* BppleFileDocument.m */; };
 		69E2BAE71EB3DABC00AFB311 /* MyAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAE61EB3DABC00AFB311 /* MyAccessoryViewController.m */; };
 		69E2BAEA1EB3E43300AFB311 /* iNodeFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAE91EB3E43300AFB311 /* iNodeFrame.m */; };
 		69E2BAF91EB466F200AFB311 /* DataFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 69E2BAF81EB466F200AFB311 /* DataFrame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6917ECBD1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+DirectoryLocations.h"; sourceTree = "<group>"; };
+		6917ECBE1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+DirectoryLocations.m"; sourceTree = "<group>"; };
+		69343C9B1EC07C3B00C78818 /* NSMutableArray+Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Log.h"; sourceTree = "<group>"; };
+		69343C9C1EC07C3B00C78818 /* NSMutableArray+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Log.m"; sourceTree = "<group>"; };
+		69651EAF1EC8908D00FC7193 /* FileViewMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileViewMenu.xib; sourceTree = "<group>"; };
 		69C253131EBA46DB0076C82D /* MyTableCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTableCellView.h; sourceTree = "<group>"; };
 		69C253141EBA46DB0076C82D /* MyTableCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableCellView.m; sourceTree = "<group>"; };
 		69DD5D0A1EB783CB00E96E7F /* MyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyWindowController.h; sourceTree = "<group>"; };
@@ -68,8 +75,6 @@
 		69E2BAD51EB37A5100AFB311 /* FileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileView.h; sourceTree = "<group>"; };
 		69E2BAD61EB37A5100AFB311 /* FileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileView.m; sourceTree = "<group>"; };
 		69E2BAD81EB3BF7D00AFB311 /* MyAccessoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAccessoryViewController.xib; sourceTree = "<group>"; };
-		69E2BAE21EB3CEA600AFB311 /* BppleFileDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BppleFileDocument.h; sourceTree = "<group>"; };
-		69E2BAE31EB3CEA600AFB311 /* BppleFileDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BppleFileDocument.m; sourceTree = "<group>"; };
 		69E2BAE51EB3DABC00AFB311 /* MyAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccessoryViewController.h; sourceTree = "<group>"; };
 		69E2BAE61EB3DABC00AFB311 /* MyAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccessoryViewController.m; sourceTree = "<group>"; };
 		69E2BAE81EB3E43300AFB311 /* iNodeFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iNodeFrame.h; sourceTree = "<group>"; };
@@ -196,6 +201,10 @@
 			children = (
 				69E2BAA41EB350E900AFB311 /* AppDelegate.h */,
 				69E2BAA51EB350E900AFB311 /* AppDelegate.m */,
+				69343C9B1EC07C3B00C78818 /* NSMutableArray+Log.h */,
+				69343C9C1EC07C3B00C78818 /* NSMutableArray+Log.m */,
+				6917ECBD1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.h */,
+				6917ECBE1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.m */,
 				69E2BAAA1EB350E900AFB311 /* Assets.xcassets */,
 				69E2BAAC1EB350E900AFB311 /* MainMenu.xib */,
 				69DD5D0A1EB783CB00E96E7F /* MyWindowController.h */,
@@ -206,14 +215,13 @@
 				69E2BAD81EB3BF7D00AFB311 /* MyAccessoryViewController.xib */,
 				69C253131EBA46DB0076C82D /* MyTableCellView.h */,
 				69C253141EBA46DB0076C82D /* MyTableCellView.m */,
-				69E2BAE21EB3CEA600AFB311 /* BppleFileDocument.h */,
-				69E2BAE31EB3CEA600AFB311 /* BppleFileDocument.m */,
 				69E2BAB51EB3510600AFB311 /* ViewController.h */,
 				69E2BAB61EB3510600AFB311 /* ViewController.m */,
 				69E2BABA1EB376C500AFB311 /* FileContentView.h */,
 				69E2BABB1EB376C500AFB311 /* FileContentView.m */,
 				69E2BAD51EB37A5100AFB311 /* FileView.h */,
 				69E2BAD61EB37A5100AFB311 /* FileView.m */,
+				69651EAF1EC8908D00FC7193 /* FileViewMenu.xib */,
 			);
 			name = ViewSource;
 			sourceTree = "<group>";
@@ -277,6 +285,7 @@
 			files = (
 				69E2BAAB1EB350E900AFB311 /* Assets.xcassets in Resources */,
 				69DD5D0E1EB783CB00E96E7F /* MyWindowController.xib in Resources */,
+				69651EB01EC8908D00FC7193 /* FileViewMenu.xib in Resources */,
 				69E2BAD91EB3BF7D00AFB311 /* MyAccessoryViewController.xib in Resources */,
 				69E2BAAE1EB350E900AFB311 /* MainMenu.xib in Resources */,
 			);
@@ -290,12 +299,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				69E2BACF1EB37A0100AFB311 /* iNode.m in Sources */,
+				6917ECBF1EC88FB300FD4D62 /* NSFileManager+DirectoryLocations.m in Sources */,
 				69E2BAEA1EB3E43300AFB311 /* iNodeFrame.m in Sources */,
 				69E2BAD21EB37A0100AFB311 /* HeadFrame.m in Sources */,
 				69E2BACE1EB37A0100AFB311 /* BppleFileSystem.m in Sources */,
 				69E2BAD41EB37A0100AFB311 /* DataConversion.m in Sources */,
 				69E2BAF91EB466F200AFB311 /* DataFrame.m in Sources */,
-				69E2BAE41EB3CEA600AFB311 /* BppleFileDocument.m in Sources */,
 				69E2BAE71EB3DABC00AFB311 /* MyAccessoryViewController.m in Sources */,
 				69E2BAB81EB3510600AFB311 /* ViewController.m in Sources */,
 				69E2BAD11EB37A0100AFB311 /* FileNode.m in Sources */,
@@ -303,6 +312,7 @@
 				69E2BAD31EB37A0100AFB311 /* BPath.m in Sources */,
 				69DD5D0D1EB783CB00E96E7F /* MyWindowController.m in Sources */,
 				69C253151EBA46DB0076C82D /* MyTableCellView.m in Sources */,
+				69343C9D1EC07C3B00C78818 /* NSMutableArray+Log.m in Sources */,
 				69E2BACD1EB37A0100AFB311 /* FileSystemController.m in Sources */,
 				69E2BABC1EB376C500AFB311 /* FileContentView.m in Sources */,
 				69E2BAD01EB37A0100AFB311 /* CataTree.m in Sources */,

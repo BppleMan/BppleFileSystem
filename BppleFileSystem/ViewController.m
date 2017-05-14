@@ -156,8 +156,6 @@
     // The data is stored ina  dictionary. The objects are the nib names to load.
     _collectionItem = [NSArray arrayWithObjects:@"应用程序", @"桌面", @"文稿", @"下载", @"影片", @"音乐", @"图片", @"HOME", nil];
     _fileSystemItem = [[NSMutableArray alloc] init];
-    //    [_childrenDictionary setObject:[NSArray arrayWithObjects:@"ContentView2", nil] forKey:@"Mailboxes"];
-    //    [_childrenDictionary setObject:[NSArray arrayWithObjects:@"ContentView1", @"ContentView1", @"ContentView1", @"ContentView1", @"ContentView2", nil] forKey:@"A Fourth Group"];
 }
 
 - (void)initOutlineView
@@ -180,6 +178,7 @@
     [NSAnimationContext endGrouping];
 }
 
+// 点击一个item时
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
     //    if ([_sidebarOutlineView selectedRow] != -1)
@@ -188,17 +187,16 @@
     if ([_fileSystemItem containsObject:item])
     {
         _currentPath = [[BPath alloc] initWithNSString:@"root"];
-        [self pushToStack:_currentPath];
-        NSMutableArray *childs = [_fileSystemController showFilesChildsWith:_currentPath];
-        [_fileContentView reloadViewWithFileChilds:childs];
     }
-    else if ([_collectionItem containsObject:item])
+    else if ([_collectionItem containsObject:item] && [item isEqual:[_collectionItem lastObject]])
     {
         _currentPath = [[BPath alloc] initWithNSString:[NSString stringWithFormat:@"root/%@", item]];
-        [self pushToStack:_currentPath];
-        NSMutableArray *childs = [_fileSystemController showFilesChildsWith:_currentPath];
-        [_fileContentView reloadViewWithFileChilds:childs];
     }
+    else
+    {
+        _currentPath = [[BPath alloc] initWithNSString:[NSString stringWithFormat:@"root/HOME/%@", item]];
+    }
+    [self showFilesWithPath:_currentPath];
 }
 
 /**
@@ -289,19 +287,21 @@
         [result setStringValue:value];
         return result;
     }
-    MyTableCellView *result = [outlineView makeViewWithIdentifier:@"MainCell" owner:self];
-    [result.textField setStringValue:item];
     if ([_collectionItem containsObject:item])
     {
-        //        _childrenDictionary = [NSArray arrayWithObjects:@"应用程序", @"桌面", @"文稿", @"下载", @"影片", @"音乐", @"图片", @"HOME", nil];
-        // The cell is setup in IB. The textField and imageView outlets are properly setup.
-        // Special attributes are automatically applied by NSTableView/NSOutlineView for the source list
+        NSTableCellView *result = [outlineView makeViewWithIdentifier:@"FolderCell" owner:self];
+        [result.textField setStringValue:item];
         if (item == _collectionItem[7])
+        {
             result.imageView.image = [NSImage imageNamed:NSImageNameHomeTemplate];
+        }
         else
             result.imageView.image = [NSImage imageNamed:NSImageNameFolder];
+        return result;
     }
-    else if ([_fileSystemItem containsObject:item])
+    MyTableCellView *result = [outlineView makeViewWithIdentifier:@"FileSystemCell" owner:self];
+    [result.textField setStringValue:item];
+    if ([_fileSystemItem containsObject:item])
     {
         result.imageView.image = [NSImage imageNamed:NSImageNameComputer];
         result.imageButton.image = [NSImage imageNamed:NSImageNameStopProgressFreestandingTemplate];
@@ -310,6 +310,14 @@
         [result setDelegate:self];
     }
     return result;
+}
+
+- (BOOL)splitView:(NSSplitView *)splitView shouldAdjustSizeOfSubview:(NSView *)view
+{
+    if (view == _leftView)
+        return NO;
+    else
+        return YES;
 }
 
 - (void)unmountButtonDidClick:(id)sender
@@ -377,6 +385,14 @@
     [_rightView addConstraint:right];
 }
 
+// 显示Path文件夹下的的文件
+- (void)showFilesWithPath:(BPath *)path
+{
+    [self pushToStack:path];
+    NSMutableArray *childs = [_fileSystemController showFileChildsWith:path];
+    [_fileContentView reloadViewWithFileChilds:childs];
+}
+
 //删除代理
 - (void)fileWillRemove:(FileView *)sender
 {
@@ -412,14 +428,45 @@
         case BppleDirectoryType:
         {
             [_currentPath appendenPathWithString:sender.fileName.stringValue];
-            NSMutableArray *childs = [_fileSystemController showFilesChildsWith:_currentPath];
-            [_fileContentView reloadViewWithFileChilds:childs];
-            [self pushToStack:_currentPath];
+            [self showFilesWithPath:_currentPath];
             break;
         }
     }
 }
 
+// 重命名代理
+- (void)fileDidRename:(NSString *)newName withOldName:(NSString *)oldName
+{
+    BPath *filePath = [BPath pathWithPath:_currentPath];
+    [filePath appendenPathWithString:oldName];
+    [_fileSystemController renameFileWith:filePath WithNewName:newName];
+}
+
+// 文件拷贝代理
+- (void)fileWillCopy:(NSString *)fileName
+{
+    [self copyFileWithFileName:fileName];
+}
+
+/**
+ *  @author BppleMan
+ *
+ *  当有新的文件拖入的时候
+ *
+ *  @param sender 表示拖入文件的绝对路径的集合
+ */
+- (void)fileDidDragInto:(NSMutableArray *)sender
+{
+    [self pasteFileWithFilePathes:sender];
+}
+
+/**
+ *  @author BppleMan
+ *
+ *  当文本编辑窗关闭的时候
+ *
+ *  @param notification
+ */
 - (void)windowWillClose:(NSNotification *)notification
 {
     NSString *string = [self.windowController.textView string];
@@ -449,7 +496,50 @@
 {
     [_fileSystemItem removeObject:item];
     [_sidebarOutlineView reloadData];
+    [_fileContentView removeAllFileView];
+    [_fileContentView.fileViews removeAllObjects];
+    [_fileContentView.fileItems removeAllObjects];
+    [_fileContentView.selectedFileViews removeAllObjects];
     self.fileSystemController = nil;
+}
+
+- (void)copyFileWithFileName:(NSString *)fileName
+{
+    _copyPath = [BPath pathWithPath:_currentPath];
+    [_copyPath appendenPathWithString:fileName];
+}
+
+- (void)pasteFileWithFilePathes:(NSMutableArray *)filePaths
+{
+    for (NSString *stringPath in filePaths)
+    {
+        FileAction result = [_fileSystemController transferFileWithStringPath:stringPath IntoFileSystemWithBPath:_currentPath];
+        
+        if (result == SUCCESS)
+        {
+            NSMutableArray *childs = [_fileSystemController showFileChildsWith:_currentPath];
+            [_fileContentView reloadViewWithFileChilds:childs];
+        }
+        else if (result == SAMENAME)
+        {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setInformativeText:@"同名文件"];
+            [alert beginSheetModalForWindow:self.window completionHandler:nil];
+        }
+    }
+}
+
+- (void)pasteFile
+{
+    FileAction  result;
+    BPath       *newPath = [BPath pathWithPath:_currentPath];
+    [newPath appendenPathWithString:[_fileContentView getCopyNameWithFileName:[_copyPath getLastPath]]];
+    result = [_fileSystemController cloneFileWithOldPath:_copyPath IntoNewPath:newPath];
+    if (result == SUCCESS)
+    {
+        NSMutableArray *childs = [_fileSystemController showFileChildsWith:_currentPath];
+        [_fileContentView reloadViewWithFileChilds:childs];
+    }
 }
 
 /*
@@ -525,7 +615,6 @@
 
 - (IBAction)creatNewFolder:(id)sender
 {
-    NSLog(@"%@", _fileContentView);
     NSString    *dirName = [_fileContentView creatNewFolder];
     BPath       *path = [BPath pathWithPath:_currentPath];
     [path appendenPathWithString:dirName];
@@ -540,7 +629,38 @@
     [_fileSystemController creatNewTextFileWithPath:path];
 }
 
-- (IBAction)paste:(id)sender {}
+- (IBAction)copy:(id)sender
+{
+    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+    [pboard clearContents];
+    FileView *fileView = [[_fileContentView selectedFileViews] firstObject];
+    [self copyFileWithFileName:[fileView.fileName stringValue]];
+    //    [pboard setString:@"abc.txt" forType:NSStringPboardType];
+    //    [pboard setData:[@"dasfdsfkl" dataUsingEncoding:NSUTF8StringEncoding] forType:NSURLPboardType];
+    //    NSFileWrapper   *fileWrapper = [[NSFileWrapper alloc]init];
+    //    [fileWrapper addRegularFileWithContents:[@"123478" dataUsingEncoding:NSUTF8StringEncoding] preferredFilename:@"abc"];
+}
+
+- (IBAction)paste:(id)sender
+{
+    NSPasteboard    *pboard = [NSPasteboard generalPasteboard];
+    NSMutableArray  *paths = [pboard propertyListForType:NSFilenamesPboardType];
+    if (paths)
+    {
+        [self pasteFileWithFilePathes:paths];
+        _copyPath = nil;
+    }
+    else if (_copyPath)
+        [self pasteFile];
+    //    NSArray         *classArray = [NSArray arrayWithObject:[NSData class]];
+    //    NSDictionary    *options = [NSDictionary dictionary];
+    //    NSPasteboard    *pboard = [NSPasteboard generalPasteboard];
+    //    NSArray         *objectsToPaste = [pboard readObjectsForClasses:classArray options:options];
+    //    for (NSData *data in objectsToPaste)
+    //    {
+    //        NSLog(@"%@", data);
+    //    }
+}
 
 - (IBAction)loadFileSystemDocument:(id)sender
 {
@@ -612,7 +732,7 @@
             if (path)
             {
                 _currentPath = [path copy];
-                NSMutableArray *childs = [_fileSystemController showFilesChildsWith:path];
+                NSMutableArray *childs = [_fileSystemController showFileChildsWith:path];
                 [_fileContentView reloadViewWithFileChilds:childs];
             }
             break;
@@ -623,7 +743,7 @@
             if (path)
             {
                 _currentPath = [path copy];
-                NSMutableArray *childs = [_fileSystemController showFilesChildsWith:path];
+                NSMutableArray *childs = [_fileSystemController showFileChildsWith:path];
                 [_fileContentView reloadViewWithFileChilds:childs];
             }
             break;

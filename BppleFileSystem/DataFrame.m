@@ -92,7 +92,7 @@
         [cluster addObjectsFromArray:[self getFreeClusterPointWithCount:count]];
     else if (count < 0)
     {
-        NSMutableArray *needFreeClusterPoint = [NSMutableArray arrayWithArray:[cluster subarrayWithRange:NSMakeRange(need - 1, -count)]];
+        NSMutableArray *needFreeClusterPoint = [NSMutableArray arrayWithArray:[cluster subarrayWithRange:NSMakeRange(need, -count)]];
         [self free:needFreeClusterPoint];
         //        删除被释放的簇
         [cluster removeObjectsInArray:needFreeClusterPoint];

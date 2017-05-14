@@ -21,11 +21,13 @@
 			<string></string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeName</key>
+			<string>NSStringPboardType</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>plain.text</string>
+				<string>public.text</string>
 			</array>
 		</dict>
 	</array>

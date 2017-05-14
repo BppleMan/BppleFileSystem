@@ -20,7 +20,9 @@
 
 - (void)appendenPathWithString:(NSString *)string;
 
--(NSString*)getLastPath;
+- (NSString *)getLastPath;
 
-- (NSString *)getPathWithoutLastPath;
+- (NSArray *)getPathWithoutLastPath;
+
+- (BPath *)getParentPath;
 @end

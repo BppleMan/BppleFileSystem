@@ -11,23 +11,33 @@
 
 @protocol FileViewDelegate <NSObject>
 
-- (void)willRemoveTheFileView:(id)fileView;
-
 - (void)didDoubleClicked:(id)fileView;
 
 - (void)didClicked:(id)fileView;
 
-- (void)didChangedTheKeyView:(id)sender;
+- (void)didChangedTheInputFocusView:(id)sender;
+
+- (void)didrename:(NSString *)newName withOldName:(NSString *)oldName;
+
+@end
+
+@protocol FileViewMenuDelegate <NSObject>
+
+- (void)willDelete:(id)sender;
+
+- (void)willCopy:(id)sender;
 
 @end
 
 @interface FileView : NSView <NSTextFieldDelegate>
 {
-    int     a;
-    BOOL    _isFileNameEditAble;
+    BOOL        _isFileNameEditAble;
+    NSString    *_oldName;
 }
 
 @property (strong) id delegate;
+
+@property (strong) id menuDelegate;
 
 @property (strong) NSView *fileNameView;
 
@@ -44,4 +54,9 @@
 - (instancetype)initWithFileName:(NSString *)fileName WithFileType:(FileType)type;
 
 - (void)changeFileImageLayer;
+
+- (IBAction)deleteFile:(id)sender;
+
+- (IBAction)copyFile:(id)sender;
+
 @end

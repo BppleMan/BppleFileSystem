@@ -41,17 +41,18 @@
     inode = [self.inodeFrame getFreeiNode];
     [inode setFileName:@"HOME"];
     [inode setFileType:BppleDirectoryType];
-    [self.cataTree creatFileNodeWith:inode ToParent:self.cataTree.rootNode];
+    FileNode *homeNode = [[FileNode alloc] initWithiNode:inode];
+    [self.cataTree addFileNode:homeNode ToParent:self.cataTree.rootNode];
     
     //    创建应用程序@"应用程序", @"桌面", @"文稿", @"下载", @"影片", @"音乐", @"图片"目录
-    NSMutableArray  *dirName = [NSMutableArray arrayWithObjects:@"应用程序", @"桌面", @"文稿", @"下载", @"影片", @"音乐", @"图片", nil];
-    FileNode        *homeNode = [self.cataTree findFileNodeWithPath:[[BPath alloc] initWithNSString:@"root/HOME"] inRoot:self.cataTree.rootNode];
+    NSMutableArray *dirName = [NSMutableArray arrayWithObjects:@"应用程序", @"桌面", @"文稿", @"下载", @"影片", @"音乐", @"图片", nil];
     for (NSString *name in dirName)
     {
         inode = [self.inodeFrame getFreeiNode];
         [inode setFileName:name];
         [inode setFileType:BppleDirectoryType];
-        [self.cataTree creatFileNodeWith:inode ToParent:homeNode];
+        FileNode *fileNode = [[FileNode alloc] initWithiNode:inode];
+        [self.cataTree addFileNode:fileNode ToParent:homeNode];
     }
 }
 
@@ -88,13 +89,17 @@
     return fileNode;
 }
 
-- (void)mkdir:(BPath *)path
+- (BOOL)mkdir:(BPath *)path
 {
+    if ([self.cataTree findFileNodeWithPath:path inRoot:self.cataTree.rootNode] != nil)
+        return NO;
     NSString    *name = [path getLastPath];
     iNode       *inode = [self.inodeFrame getFreeiNode];
     [inode setFileName:name];
     [inode setFileType:BppleDirectoryType];
-    [self.cataTree addFileNodeWith:inode ToPath:path];
+    FileNode *fileNode = [[FileNode alloc] initWithiNode:inode];
+    [self.cataTree addFileNode:fileNode ToPath:[path getParentPath]];
+    return YES;
 }
 
 - (void)rm:(BPath *)path
@@ -106,13 +111,19 @@
     [parent removeChildsObject:fileNode];
 }
 
-- (void)vim:(BPath *)path
+- (BOOL)vim:(BPath *)path
 {
+    if ([self.cataTree findFileNodeWithPath:path inRoot:self.cataTree.rootNode] != nil)
+    {
+        return NO;
+    }
     NSString    *name = [path getLastPath];
     iNode       *inode = [self.inodeFrame getFreeiNode];
     [inode setFileName:name];
     [inode setFileType:BppleTextFileType];
-    [self.cataTree addFileNodeWith:inode ToPath:path];
+    FileNode *fileNode = [[FileNode alloc] initWithiNode:inode];
+    [self.cataTree addFileNode:fileNode ToPath:[path getParentPath]];
+    return YES;
 }
 
 - (void)write:(BPath *)path with:(NSData *)data
@@ -122,10 +133,35 @@
     [self.dataFrame writeDataWith:data WithFileNode:fileNode];
 }
 
+- (BOOL)rename:(BPath *)path with:(NSString *)newName
+{
+    BPath *newPath = [path getParentPath];
+    [newPath appendenPathWithString:newName];
+    if ([self.cataTree findFileNodeWithPath:newPath inRoot:self.cataTree.rootNode] != nil)
+        return NO;
+    FileNode *fileNode = [self.cataTree findFileNodeWithPath:path inRoot:self.cataTree.rootNode];
+    [fileNode.inode setFileName:newName];
+    return YES;
+}
+
 - (NSData *)read:(BPath *)path
 {
     FileNode *fileNode = [self.cataTree findFileNodeWithPath:path inRoot:self.cataTree.rootNode];
     return [self.dataFrame readDataWithFileNode:fileNode];
+}
+
+- (void)cp:(BPath *)oldPath to:(BPath *)newPath
+{
+    FileNode    *oldNode = [self.cataTree findFileNodeWithPath:oldPath inRoot:self.cataTree.rootNode];
+    NSString    *name = [newPath getLastPath];
+    iNode       *inode = [self.inodeFrame getFreeiNode];
+    [inode setFileName:name];
+    [inode setFileType:[oldNode.inode fileType]];
+    [inode.clusterPoint addObjectsFromArray:[oldNode.inode clusterPoint]];
+    FileNode *fileNode = [[FileNode alloc] initWithiNode:inode];
+    [fileNode.childs addObjectsFromArray:oldNode.childs];
+    [fileNode setDataLength:oldNode.dataLength];
+    [self.cataTree addFileNode:fileNode ToPath:[newPath getParentPath]];
 }
 
 + (NSInteger)getDefaultFileSize

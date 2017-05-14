@@ -10,12 +10,12 @@
 #import "FileContentView.h"
 #import "FileSystemController.h"
 #import "BppleFileSystem.h"
-#import "BppleFileDocument.h"
 #import "MyAccessoryViewController.h"
 #import "MyWindowController.h"
 #import "MyTableCellView.h"
 
-@interface ViewController : NSViewController <NSToolbarDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource, NSOpenSavePanelDelegate, FileContentViewDelegate, NSWindowDelegate, MyTableCellViewDelegate>
+@interface ViewController : NSViewController <NSToolbarDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource, NSOpenSavePanelDelegate, NSWindowDelegate, NSSplitViewDelegate,
+FileContentViewDelegate, MyTableCellViewDelegate>
 {
     NSToolbar *_toolBar;
     
@@ -33,9 +33,13 @@
     
     BPath *_tempPath;
     
+    BPath *_copyPath;
+    
     IBOutlet NSOutlineView *_sidebarOutlineView;
     
     IBOutlet NSSlider *_fileViewSizeSlider;
+    
+    IBOutlet NSView *_leftView;
     
     IBOutlet NSView *_rightView;
     
@@ -58,6 +62,8 @@
 - (IBAction)creatNewFolder:(id)sender;
 
 - (IBAction)creatTextFile:(id)sender;
+
+- (IBAction)copy:(id)sender;
 
 - (IBAction)paste:(id)sender;
 

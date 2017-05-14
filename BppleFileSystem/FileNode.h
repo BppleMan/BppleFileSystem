@@ -11,15 +11,13 @@
 
 @interface FileNode : NSObject <NSCoding>
 
-// @property (nonatomic, strong) NSMutableData *data;
-
 @property (nonatomic, strong) NSMutableArray *childs;
 
 @property (nonatomic, strong) iNode *inode;
 
 @property (nonatomic, strong) FileNode *parent;
 
-@property (nonatomic,assign) NSUInteger dataLength;
+@property (nonatomic, assign) NSUInteger dataLength;
 
 - (instancetype)initWithiNode:(iNode *)inode;
 
