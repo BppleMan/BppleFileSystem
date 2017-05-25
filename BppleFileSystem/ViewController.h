@@ -50,6 +50,8 @@ FileContentViewDelegate, MyTableCellViewDelegate>
     NSMutableArray *_pathStack;
     
     NSInteger _stackPoint;
+    
+    IBOutlet NSTextField *_pathLabel;
 }
 @property (strong) MyWindowController *windowController;
 

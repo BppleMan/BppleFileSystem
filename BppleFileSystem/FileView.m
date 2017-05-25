@@ -65,7 +65,7 @@
     [self.fileName setStringValue:fileName];
     [self.fileName setBordered:NSNoBorder];
     [self.fileName setAlignment:NSTextAlignmentCenter];
-    [self.fileName setFont:[NSFont systemFontOfSize:16]];
+    [self.fileName setFont:[NSFont systemFontOfSize:14]];
     [self.fileName setSelectable:NO];
     [self.fileName sizeToFit];
     [[self.fileName cell] setUsesSingleLineMode:NO];

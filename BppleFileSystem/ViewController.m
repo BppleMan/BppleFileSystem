@@ -21,7 +21,7 @@
     [self initOutlineView];
     [self initFileContentView];
     [self initPathStack];
-    [self loadFileSystemControllerWithPath:[NSURL fileURLWithPath:@"/Users/BppleMan/Desktop/FileSystem/未命名.bpfs"]];
+    [self loadFileSystemControllerWithPath:[NSURL fileURLWithPath:@"/Users/BppleMan/Desktop/BppleFileSystem/BppleFileSystem.bpfs"]];
 }
 
 /*
@@ -196,6 +196,7 @@
     {
         _currentPath = [[BPath alloc] initWithNSString:[NSString stringWithFormat:@"root/HOME/%@", item]];
     }
+    [_pathLabel setStringValue:[_currentPath pathStr]];
     [self showFilesWithPath:_currentPath];
 }
 
@@ -428,6 +429,7 @@
         case BppleDirectoryType:
         {
             [_currentPath appendenPathWithString:sender.fileName.stringValue];
+            [_pathLabel setStringValue:[_currentPath pathStr]];
             [self showFilesWithPath:_currentPath];
             break;
         }
@@ -764,6 +766,9 @@
             }
             break;
         }
+        default:
+            [_pathLabel setStringValue:[_currentPath pathStr]];
+            break;
     }
 }
 

@@ -15,8 +15,8 @@
     self = [super init];
     if (self)
     {
-        _defaultGridSize = 200;
-        _defaultFileViewSize = 150;
+        _defaultGridSize = 150;
+        _defaultFileViewSize = 100;
         _unnamedFolderCount = 0;
         _scale = scale;
         self.fileItems = [[NSMutableDictionary alloc] init];
